@@ -43,4 +43,3 @@ class Bicicleta(Vehiculo):
 Bycicle = Bicicleta('roja', 2, 'torpedo', 'tipo T')
 Bycicle.pedalear('adelante')
 Bycicle.frenar()
-
