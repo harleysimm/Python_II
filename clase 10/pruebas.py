@@ -46,8 +46,8 @@ class Cinema:
                 if cine['nombre'] == nombre_cine:
                     cine_seleccionado = cine
                     break
-        if cine_seleccionado == None:
-            print('No se encontró el cine seleccionado.')
+            if cine_seleccionado == None:
+                print('No se encontró el cine seleccionado.')
 
         sala_seleccionada = None
         while sala_seleccionada is None:
@@ -60,8 +60,8 @@ class Cinema:
                 if sala['numero'] == numero_sala:
                     sala_seleccionada = sala
                     break
-        if sala_seleccionada == None:
-            print('La sala seleccionada no existe.')
+            if sala_seleccionada == None:
+                print('La sala seleccionada no existe.')
         
         cartelera = {
                     'pelicula': nombre_pelicula,
@@ -98,13 +98,15 @@ class Boleteria(Cinema):
         print('----****** Bienvenido a Cinema ******--------')
         print('\n-----------------------------------------\n')
         print('Cartelera:')
-        for cartelera in self.carteleras:
-            print('{:<15}'.format(cartelera['pelicula']), '{:<15}'.format(cartelera['cine']),'{:<15}'.format(cartelera['sala']),'{:<15}'.format(cartelera['hora']),'{:<15}'.format(cartelera['fecha']))
-
+        print('{:<15}'.format('N°'),'{:<15}'.format('Película'), '{:<15}'.format('Cine'),'{:<15}'.format('Sala'),'{:<15}'.format('Hora'),'{:<15}'.format('Fecha'))
+        for cartelera in enumerate(self.carteleras):
+            print('{:<15}'.format(cartelera + 1),'{:<15}'.format(cartelera['pelicula']), '{:<15}'.format(cartelera['cine']),'{:<15}'.format(cartelera['sala']),'{:<15}'.format(cartelera['hora']),'{:<15}'.format(cartelera['fecha']))
+        
 
 crear_cine = Cinema()
 crear_cine.registrar_cine()
 crear_cine.agregar_sala()
+crear_cine.agregar_cartelera()
 crear_cine.agregar_cartelera()
 
 boleto = Boleteria()
