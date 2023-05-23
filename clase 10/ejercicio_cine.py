@@ -25,6 +25,7 @@ class Cinema:
         
         for numero_sala in range(inicio, fin + 1):
             sala ={'numero': numero_sala, 'asientos': [] }
+            
             for numero_asiento in range(cantidad_asientos):
                 asiento = {'numero': numero_asiento + 1, 'vendido': False}
                 sala['asientos'].append(asiento)
