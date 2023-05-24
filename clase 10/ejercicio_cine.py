@@ -49,7 +49,7 @@ class Cinema:
                     cine_seleccionado = cine
                     break
             if cine_seleccionado == None:
-                print('No se encontró el cine seleccionado.')
+                print('No se encontró el cine seleccionado')
 
         sala_seleccionada = None
         while sala_seleccionada is None:
@@ -63,7 +63,7 @@ class Cinema:
                     sala_seleccionada = sala
                     break
             if sala_seleccionada == None:
-                print('La sala seleccionada no existe.')
+                print('La sala seleccionada no existe')
 
         cartelera_existente = False
         for cartelera in carteleras:
@@ -71,7 +71,7 @@ class Cinema:
                 cartelera_existente = True
                 break
         if cartelera_existente:
-            print('Ya existe una película para esa sala y hora.')
+            print('Ya existe una película para esa sala y hora')
         else:
             cartelera = {
                     'correlativo': self.correlativo + 1,
@@ -102,17 +102,18 @@ class Boleteria(Cinema):
             'price': 3500,
              'correlation_number':0
             }]
+        self.tickets_vendidos = []
         
     def vender_ticket(self):
-        print('\n-----------------------------------------\n')
-        print('----****** Bienvenido a Cinema ******--------')
-        print('\n-----------------------------------------\n')
+        print('\n-------------------------------------------------\n')
+        print('------****** Bienvenido a Cineland ******--------')
+        print('\n-------------------------------------------------\n')
         print('Cartelera:')
         print('{:<5}'.format('N°'),'{:<30}'.format('Película'), '{:<15}'.format('Cine'),'{:<5}'.format('Sala'),'{:<10}'.format('Hora'),'{:<10}'.format('Fecha'))
         for cartelera in carteleras:
             print('{:<5}'.format(cartelera['correlativo']),'{:<30}'.format(cartelera['pelicula']), '{:<15}'.format(cartelera['cine']),'{:<5}'.format(cartelera['sala']),'{:<10}'.format(cartelera['hora']),'{:<10}'.format(cartelera['fecha']))
-        
-        elige_pelicula = int(input('Elija el numero de la película que quiere ver:'))
+        print('\n-------------------------------------------------------------------------\n')        
+        elige_pelicula = int(input('Elija el número de la película que quiere ver: '))
         if elige_pelicula <= len(carteleras):
             cartelera_elegida = carteleras[elige_pelicula - 1]
             print('Tipos de ticket:')
@@ -147,13 +148,26 @@ class Boleteria(Cinema):
                     if asiento_encontrado is not None:
                         asiento_encontrado['vendido'] = True
 
+                        ticket_vendido = {
+                            'correlativo': self.num_ticket,
+                            'pelicula': cartelera_elegida['pelicula'],
+                            'cine': cartelera_elegida['cine'],
+                            'sala': cartelera_elegida['sala'], 
+                            'hora': cartelera_elegida['hora'],
+                            'fecha': cartelera_elegida['fecha'],
+                            'tipo': ticket_elegido
+                        }
+                        self.tickets_vendidos.append(ticket_vendido)
+                                                
                         print(f'Usted ha seleccionado el asiento {asiento_elegido}')
                         print(f'Usted ha elegido la película {cartelera_elegida["pelicula"]} en la sala {cartelera_elegida["sala"]} en el cine {cartelera_elegida["cine"]}, asiento {asiento_elegido} y el tipo de ticket {ticket_elegido}')
                         print(f'Su ticket es: {ticket_elegido} y su correlativo es: {self.num_ticket} y su monto a pagar es: {ticket_encontrado["price"]}')
-                        self.num_ticket +=1
-                        break
+                        
+                        self.num_ticket += 1
+
                     else:
                         print('El asiento elegido está vendido, por favor escoja otro')
+                                        
             else: 
                 print('El tipo de ticket elegido no es válido')
         else:
@@ -161,8 +175,8 @@ class Boleteria(Cinema):
 
     def total_entradas_dia(self):
         entradas_dia = {}
-        for cartelera in carteleras:
-            fecha = cartelera['fecha']
+        for ticket in self.tickets_vendidos:
+            fecha = ticket['fecha']
             if fecha in entradas_dia:
                 entradas_dia[fecha] += 1
             else:
@@ -176,8 +190,8 @@ class Boleteria(Cinema):
 
     def total_entradas_por_funcion(self):
         entradas_por_funcion = {}
-        for cartelera in carteleras:
-            funcion = f"{cartelera['pelicula']} - {cartelera['cine']} - Sala {cartelera['sala']} - {cartelera['hora']}"
+        for ticket  in self.tickets_vendidos:
+            funcion = f"{ticket['pelicula']} - {ticket['cine']} - Sala {ticket['sala']} - {ticket['hora']}"
             if funcion in entradas_por_funcion:
                 entradas_por_funcion[funcion] += 1
             else:
@@ -192,8 +206,8 @@ class Boleteria(Cinema):
 
     def total_entradas_por_pelicula(self):
         entradas_por_pelicula = {}
-        for cartelera in carteleras:
-            pelicula = cartelera['pelicula']
+        for ticket in self.tickets_vendidos:
+            pelicula = ticket['pelicula']
             if pelicula in entradas_por_pelicula:
                 entradas_por_pelicula[pelicula] += 1
             else:
@@ -208,25 +222,35 @@ class Boleteria(Cinema):
 
     def reporte_entradas_completo(self):
         entradas_completas = {}
-        for cartelera in carteleras:
-            fecha = cartelera['fecha']
-            pelicula = cartelera['pelicula']
-            funcion = f"{cartelera['cine']} - Sala {cartelera['sala']} - {cartelera['hora']}"
-            key = (fecha, pelicula, funcion)
-            if key in entradas_completas:
-                entradas_completas[key] += 1
-            else:
-                entradas_completas[key] = 1
+        for ticket in self.tickets_vendidos:
+            fecha = ticket['fecha']
+            pelicula = ticket['pelicula']
+            funcion = f"{ticket['cine']} - Sala {ticket['sala']} - {ticket['hora']}"
+            tipo_ticket = ticket['tipo']
+            precio_ticket = None
+
+            for ticket_type in self.types:
+                if ticket_type['type'] == tipo_ticket:
+                    precio_ticket = ticket_type['price']
+                    break
+            if precio_ticket is not None:
+                key = (fecha, pelicula, funcion, tipo_ticket)
+                if key in entradas_completas:
+                    entradas_completas[key] += 1
+                else:
+                    entradas_completas[key] = 1
     
         print('\n-------------------------------------------------------\n')
         print("Reporte de entradas vendidas por día, película y función:")
         print('\n-------------------------------------------------------\n')
-        print('{:<12}'.format('Fecha'),'{:<30}'.format('Película'), '{:<30}'.format('Función'),'{:<5}'.format('Entradas vendidas'))
+        print('{:<10}'.format('Fecha'),'{:<20}'.format('Película'), '{:<30}'.format('Función'),'{:<12}'.format('Entradas vendidas'),'{:<15}'.format('Tipo ticket'))
         for key, cantidad_entradas in entradas_completas.items():
-            fecha, pelicula, funcion = key
-            print('{:<12}'.format(fecha),'{:<30}'.format(pelicula), '{:<30}'.format(funcion),'{:<5}'.format(cantidad_entradas))
+            fecha, pelicula, funcion, tipo_ticket = key
+            print('{:<10}'.format(fecha),'{:<20}'.format(pelicula), '{:<30}'.format(funcion),'{:<12}'.format(cantidad_entradas),'{:<15}'.format(tipo_ticket))
 
 crear_cine = Cinema()
+crear_cine.registrar_cine()
+crear_cine.agregar_sala()
 crear_cine.registrar_cine()
 crear_cine.agregar_sala()
 crear_cine.agregar_cartelera()
