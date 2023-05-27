@@ -248,6 +248,7 @@ class Boleteria(Cinema):
             fecha, pelicula, funcion, tipo_ticket = key
             print('{:<10}'.format(fecha),'{:<20}'.format(pelicula), '{:<30}'.format(funcion),'{:<12}'.format(cantidad_entradas),'{:<15}'.format(tipo_ticket))
 
+
 crear_cine = Cinema()
 crear_cine.registrar_cine()
 crear_cine.agregar_sala()
