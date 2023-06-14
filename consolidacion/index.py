@@ -44,7 +44,7 @@ class SistemaControlVehiculos:
         
             while contar <= ingresar_vehiculos:
 
-                print(f'*****Datos del automovil******')
+                print(f'*****Datos del automovil {contar}******')
                 marca = input("Inserte la marca del automovil: ")
                 modelo = input("Inserte el modelo: ")
                 num_ruedas = int(input("Inserte el número de ruedas: "))
