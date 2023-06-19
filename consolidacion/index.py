@@ -10,6 +10,41 @@ class Automovil(Vehiculo):
         super().__init__(_marca, _modelo, _numero_ruedas)
         self.velocidad = _velocidad
         self.cilindrada = _cilindrada
+        
+    def agregar_vehiculos(self):
+            try:             
+                ingresar_vehiculos = int(input("Cuántos vehiculos desea insertar: "))
+                contar = 1
+            
+                while contar <= ingresar_vehiculos:
+
+                    print(f'*****Datos del automovil {contar}******')
+                    marca = input("Inserte la marca del automovil: ")
+                    modelo = input("Inserte el modelo: ")
+                    num_ruedas = int(input("Inserte el número de ruedas: "))
+                    velocidad = int(input("Inserte la velocidad en km/h: "))
+                    cilindraje = int(input("Inserte el cilindraje en cc: "))
+                    self.lista_vehiculos.append({
+                        "marca": marca,
+                        "modelo": modelo,
+                        "numero ruedas": num_ruedas,
+                        "velocidad": velocidad,
+                        "cilindraje": cilindraje
+                    })
+                    contar += 1
+                    print("Vehiculo agregado correctamente")
+        
+            except:
+                pass
+
+        def mostrar_vehiculos():
+            pass
+
+        def guardar_datos_csv():
+            pass
+
+        def leer_datos_csv():
+            pass
 
 class Particular(Automovil):
     def __init__(self, _marca, _modelo, _numero_ruedas, _velocidad, _cilindrada, _numero_puestos):
@@ -37,40 +72,7 @@ class SistemaControlVehiculos:
     def __init__(self):
         self.lista_vehiculos = []
 
-    def agregar_vehiculos(self):
-        try:             
-            ingresar_vehiculos = int(input("Cuántos vehiculos desea insertar: "))
-            contar = 1
-        
-            while contar <= ingresar_vehiculos:
-
-                print(f'*****Datos del automovil {contar}******')
-                marca = input("Inserte la marca del automovil: ")
-                modelo = input("Inserte el modelo: ")
-                num_ruedas = int(input("Inserte el número de ruedas: "))
-                velocidad = int(input("Inserte la velocidad en km/h: "))
-                cilindraje = int(input("Inserte el cilindraje en cc: "))
-                self.lista_vehiculos.append({
-                    "marca": marca,
-                    "modelo": modelo,
-                    "numero ruedas": num_ruedas,
-                    "velocidad": velocidad,
-                    "cilindraje": cilindraje
-                })
-                contar += 1
-                print("Vehiculo agregado correctamente")
-      
-        except:
-            pass
-
-    def mostrar_vehiculos():
-        pass
-
-    def guardar_datos_csv():
-        pass
-
-    def leer_datos_csv():
-        pass
+    
 
 
 AutoMaria = SistemaControlVehiculos()
