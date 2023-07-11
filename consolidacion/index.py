@@ -66,7 +66,7 @@ class SistemaControlVehiculos(Automovil):
     def __init__(self):
         self.lista_vehiculos = []
 
-    def agregar_vehiculos(self, vehiculo):
+    def agregar_vehiculo(self, vehiculo):
         self.lista_vehiculos.append(vehiculo)
 
     def guardar_csv(self, nombre_archivo):
